@@ -12,8 +12,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Build the Docker image
-#         run: docker build ./price-collector-api --file ./price-collector-api/Dockerfile --tag price-collector:$(date +%s)
       - name: Start containers
         run: docker-compose -f "docker-compose.yml" up -d --build
   
