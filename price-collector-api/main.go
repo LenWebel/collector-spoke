@@ -36,13 +36,12 @@ func productPrice(w http.ResponseWriter, r *http.Request) {
 func handleRequests() {
 	http.HandleFunc("/", homePage)
 	http.HandleFunc("/productPrice/", productPrice)
-
 	log.Fatal(http.ListenAndServe(":10000", nil))
 }
 
 func connect() *amqp.Connection {
 	println("connecting to rabbit")
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://guest:guest@rabbitmq-container:5672")
 	failOnError(err, "Failed to connect to RabbitMQ")
 	// defer conn.Close()
 	return conn
@@ -86,17 +85,23 @@ func publish(routingKey string, body []byte) {
 
 func main() {
 	connection = connect()
-	channel = createChannel("channel-1")
 
-	declareQueue("queue-1")
+	if !connection.IsClosed() {
+		channel = createChannel("channel-1")
+
+		declareQueue("queue-1")
+
+		defer channel.Close()
+		defer connection.Close()
+	}
 
 	handleRequests()
-	defer channel.Close()
-	defer connection.Close()
+
 }
 
 func failOnError(err error, msg string) {
 	if err != nil {
-		log.Fatalf("%s: %s", msg, err)
+		// log.Fatalf("%s: %s", msg, err)
+		log.Printf("%s: %s", msg, err)
 	}
 }
