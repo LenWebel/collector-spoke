@@ -1,3 +1,4 @@
+#!/bin/bash
 FROM golang:alpine as builder
 
 WORKDIR /app 

@@ -1,3 +1,4 @@
+#!/bin/bash
 version: "3.2"
 services:
   rabbitmq:
@@ -40,7 +41,7 @@ services:
     environment:
       - RabbitMQ_HOST=rabbitmq
     build: ./price-collector-rabbitmq-subscriber
-    image: ghcr.io/lenwebel/collectorspoke-api-subscriber:latest
+    image: ghcr.io/lenwebel/collectorspoke-influx-subscriber:latest
     ports:
       - 10001:10001
     restart: on-failure
