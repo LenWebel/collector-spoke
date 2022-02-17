@@ -25,7 +25,6 @@ services:
     environment:
       - RabbitMQ_HOST=rabbitmq-container
     build: ./price-collector-api
-    image: ghcr.io/lenwebel/collectorspoke_api:latest
     ports:
       - 10000:10000
     restart: on-failure
@@ -40,7 +39,6 @@ services:
     environment:
       - RabbitMQ_HOST=rabbitmq
     build: ./price-collector-rabbitmq-subscriber
-    image: ghcr.io/lenwebel/collectorspoke-api-subscriber:latest
     ports:
       - 10001:10001
     restart: on-failure

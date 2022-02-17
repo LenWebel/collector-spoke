@@ -21,6 +21,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 func productPrice(w http.ResponseWriter, r *http.Request) {
 
 	body, err := io.ReadAll(r.Body)
+
 	failOnError(err, "Failed to read the body content")
 
 	query := r.URL.Path
